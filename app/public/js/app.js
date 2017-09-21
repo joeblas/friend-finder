@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  $(".modal").modal();
+
   $("#submit").on("click", function() {
     // Form validation
     function validateForm() {
@@ -7,7 +10,7 @@ $(document).ready(function() {
         if ($(this).val() === "") isValid = false;
       });
 
-      $(".chosen-select").each(function() {
+      $(".browser-default").each(function() {
         if ($(this).val() === "") isValid = false;
       });
       return isValid;
@@ -33,7 +36,9 @@ $(document).ready(function() {
         ]
       };
 
-      console.log(userData);
+	  console.log(userData);
+	  
+	  $(".modal").modal('open');
 
       // Grab the URL of the website
       var currentURL = window.location.origin;
@@ -41,11 +46,12 @@ $(document).ready(function() {
       // AJAX post the data to the friends API.
       $.post(currentURL + "/api/friends", userData, function(data) {
         // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+        // $("#resultsModal").modal("open");
+
         $("#matchName").text(data.name);
         $("#matchImg").attr("src", data.photo);
 
         // Show the modal with the best match
-        $("#resultsModal").modal("toggle");
       });
     } else {
       alert("Please fill out all fields before submitting!");
